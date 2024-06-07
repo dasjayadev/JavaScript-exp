@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>CALLBACK function and HIGHERORDER function</h1>
+    <script>
+        // call back
+
+
+// setTimeout(function(){
+//     console.log("timer")
+// },2000)
+
+// function a(b){
+//     console.log("1");
+//     b()
+// }
+// a(function b() {
+// console.log("2");
+// })
+
+                    //higher order function
+
+    // function main(){
+    //     console.log("m1");
+    // }
+
+
+    // function main2(){
+    //     console.log("m2");
+    //     main()
+    // }
+    // main2()
+
+    function main(){
+        let outPut = calc(10,20,mul)
+        console.log("outPut =" , outPut);
+    }
+    main()
+    function calc(a,b,operator){
+        let res = 0;
+        res = operator(a,b)
+        return res;
+    }
+    function add (a,b){
+        let result = a+b;
+        return result;
+    }
+    function mul(n,m){
+        let result = n*m;
+        return result;
+    }
+
+
+
+
+    </script>
+</body>
+</html>

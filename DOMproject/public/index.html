@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Data</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .sortable:hover {
+            cursor: pointer;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h2 class="mb-4">Employee Data</h2>
+        <form id="employeeForm" class="mb-4">
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="name">Name</label>
+                    <input type="text" class="form-control" id="name" placeholder="Enter name">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="designation">Designation</label>
+                    <input type="text" class="form-control" id="designation" placeholder="Enter designation">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label>Gender</label><br>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="gender" id="male" value="Male">
+                        <label class="form-check-label" for="male">Male</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="gender" id="female" value="Female">
+                        <label class="form-check-label" for="female">Female</label>
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="salary">Salary</label>
+                    <input type="text" class="form-control" id="salary" placeholder="Enter salary">
+                </div>
+            </div>
+            <button type="button" class="btn btn-primary" id="submitBtn">Submit</button>
+        </form>
+
+        <div class="mb-3">
+            <input type="text" id="search" class="form-control" placeholder="Search employees...">
+        </div>
+
+        <table class="table table-bordered" id="emp_data">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col" class="sortable" data-sort="name">Name</th>
+                    <th scope="col" class="sortable" data-sort="designation">Designation</th>
+                    <th scope="col" class="sortable" data-sort="gender">Gender</th>
+                    <th scope="col" class="sortable" data-sort="salary">Salary</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- data add from script -->
+            </tbody>
+        </table>
+    </div>
+    <!-- script tag -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            loadData();
+        });
+
+        let submitBtn = document.getElementById('submitBtn');
+        submitBtn.addEventListener('click', function () {
+            let name = document.getElementById('name').value;
+            let designation = document.getElementById('designation').value;
+            let gender = document.querySelector('input[name="gender"]:checked').value;
+            let salary = document.getElementById('salary').value;
+
+            if (!name || !designation || !gender || !salary) {
+                alert('Please fill all the fields');
+                return;
+            }
+
+            let table = document.getElementById('emp_data').getElementsByTagName('tbody')[0];
+            let newRow = table.insertRow();
+
+            let nameCell = newRow.insertCell(0);
+            let designationCell = newRow.insertCell(1);
+            let genderCell = newRow.insertCell(2);
+            let salaryCell = newRow.insertCell(3);
+
+            nameCell.textContent = name;
+            designationCell.textContent = designation;
+            genderCell.textContent = gender;
+            salaryCell.textContent = salary;
+
+            // Store data in local storage
+            storeData(name, designation, gender, salary);
+
+            // Clear the input fields
+            document.getElementById('name').value = '';
+            document.getElementById('designation').value = '';
+            document.querySelector('input[name="gender"]:checked').checked = false;
+            document.getElementById('salary').value = '';
+        });
+
+        function storeData(name, designation, gender, salary) {
+            let empData = JSON.parse(localStorage.getItem('empData')) || [];
+            empData.push({ name, designation, gender, salary });
+            localStorage.setItem('empData', JSON.stringify(empData));
+            renderTable(empData);
+        }
+
+        function loadData() {
+            let empData = JSON.parse(localStorage.getItem('empData')) || [];
+            renderTable(empData);
+        }
+
+        function renderTable(empData) {
+            let table = document.getElementById('emp_data').getElementsByTagName('tbody')[0];
+            table.innerHTML = '';
+
+            empData.forEach(data => {
+                let newRow = table.insertRow();
+
+                let nameCell = newRow.insertCell(0);
+                let designationCell = newRow.insertCell(1);
+                let genderCell = newRow.insertCell(2);
+                let salaryCell = newRow.insertCell(3);
+
+                nameCell.textContent = data.name;
+                designationCell.textContent = data.designation;
+                genderCell.textContent = data.gender;
+                salaryCell.textContent = data.salary;
+            });
+        }
+
+        // Search functionality
+        document.getElementById('search').addEventListener('input', function() {
+            let searchValue = this.value.toLowerCase();
+            let empData = JSON.parse(localStorage.getItem('empData')) || [];
+            let filteredData = empData.filter(data => {
+                return data.name.toLowerCase().includes(searchValue) || 
+                       data.designation.toLowerCase().includes(searchValue) ||
+                       data.gender.toLowerCase().includes(searchValue) ||
+                       data.salary.toLowerCase().includes(searchValue);
+            });
+            renderTable(filteredData);
+        });
+
+        // Sorting functionality
+        document.querySelectorAll('.sortable').forEach(header => {
+            header.addEventListener('click', function() {
+                let empData = JSON.parse(localStorage.getItem('empData')) || [];
+                let sortKey = this.getAttribute('data-sort');
+                let sortedData = empData.sort((a, b) => {
+                    if (a[sortKey] < b[sortKey]) return -1;
+                    if (a[sortKey] > b[sortKey]) return 1;
+                    return 0;
+                });
+                localStorage.setItem('empData', JSON.stringify(sortedData));
+                renderTable(sortedData);
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1></h1>
+    <script>
+
+      function createPerson(name, age) {
+        // Private variables
+        let _name = name;
+        let _age = age;
+
+        return {
+          // Public method to get the name
+          getName: function () {
+            return _name;
+          },
+
+          // Public method to get the age
+          getAge: function () {
+            return _age;
+          },
+
+          // Public method to set the name
+          setName: function (name) {
+            _name = name;
+          },
+
+          // Public method to set the age
+          setAge: function (age) {
+            if (age > 0) {
+              _age = age;
+            } else {
+              console.log("Age must be positive");
+            }
+          },
+        };
+      }
+
+      // Usage
+      const person = createPerson("Alice", 25);
+      console.log(person.getName()); // Alice
+      console.log(person.getAge()); // 25
+
+      person.setName("Bob");
+      person.setAge(30);
+      console.log(person.getName()); // Bob
+      console.log(person.getAge()); // 30
+
+      // Private variables cannot be accessed directly
+      console.log(person._name); // undefined
+    </script>
+  </body>
+</html>

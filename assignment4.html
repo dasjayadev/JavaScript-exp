@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>promise problem</h1>
+    <script>
+      // let url_2 = "http://dummyjson.com/users";
+      // let url_1 = "https://dummyjson.com/products";
+
+      // let p1 = new Promise((resolve, reject) => {
+      //   try {
+      //     fetch(url_1)
+      //       .then((responce) => responce.json())
+      //       .then((data) => console.log(data))
+      //       .catch((err) => console.log(err));
+      //   } catch (error) {
+      //     reject(error);
+      //   }
+      // });
+      // let p2 = new Promise(async (resolve, reject) => {
+      //   try {
+      //     let responce = await fetch(url_2);
+      //     let data = await responce.json();
+      //     console.log(data);
+      //   } catch (error) {
+      //     reject(error);
+      //   }
+      // });
+
+      // Promise.all([p1, p2]);
+
+      //q no 2
+//HOW TO SEND RESPONCE 
+                  //   token
+      //   fetch("URL", {
+      //     method: "POST" ,
+      //     headers: {
+      //       Authorization: "Babcde",
+      //       "Content-Type": "application/json",
+      //     },
+      //   })
+      //     .then((res) => res.json())
+      //     .then(console.log);
+      //     .catch(console.log(error);
+
+                      //     ques no 3
+
+
+// DEEPCOPY USING SPREAD OPERATER
+      // let obj = {
+      //   name:'jayadev',
+      //   add:{
+      //     ca:"bengaluru",
+      //     pa:{
+      //       a:'ctc',
+      //       b:'bbs'
+      //     }
+      //   }
+      // }
+      // let obj2 = {...obj,add:{...obj.add,pa:{...obj.add.pa,b:{...obj.add.pa,b:''}}}}
+      // obj2.add.pa.b = 'ok done'
+      // console.log(obj);
+      // console.log(obj2);
+
+                //  q no 4
+
+
+let x = [1,2,3,[4,5,[6,7,8],9]]     //flat it without using flat method
+// // let res = x.flat(2)
+// // console.log(res);
+
+// let res = [...x]
+// let y = [...res]
+// let z = [...y]
+// console.log(z);
+
+let result = [];
+
+function flat (x){
+  for(let item of x){
+    if(Array.isArray(item)){
+      flat(item)
+    }else{
+      result.push(item)
+    }
+  }
+  return result;
+}
+console.log(flat(x));
+    </script>
+  </body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      let arr = [2, 4, 6, 8, 9];
+
+      //forEach method
+
+      //  arr.forEach((item,i,arr)=>{
+      //     console.log(item,i,arr);
+      //  })
+      //  Array.prototype.myForEach=function(arg){
+      //     for(let i = 0; i <= this.length; i++){
+      //         arg(this[i],i,this)
+      //     }
+      //  }
+      //  arr.myForEach((item,i,arr)=>{
+      //     console.log(item,i,arr)
+      //  })
+
+      // Map method
+
+      //it is a higher order function it is use to loop an array and return a new ARRAY
+      //its not affecting the new array
+
+      let a = [1, 2, 3, 4, 5];
+
+      // let newarr = a.map((ele)=>{
+      //     console.log(ele);
+      //     return ele+1
+      // })
+      // console.log(a);
+      // console.log(newarr);
+
+      // Array.prototype.myMap = function(cb){
+
+      //     let arr = []
+
+      //     for(let i = 0; i < this.length; i++)
+      //     {
+      //          arr.push(cb(this[i]))
+      //     }
+      //    return arr
+      // }
+      // let x = arr.myMap((item)=>{
+      //     return item*7
+      // })
+      // console.log(x);
+      // console.log(a);
+
+      //filter Method
+
+      Array.prototype.myfilter = function (cb) {
+        let newarr = [];
+        for (let i = 0; i < this.length; i++) {
+          if (cb(this[i], i, this)) {
+            newarr.push(this[i]);
+          }
+        }
+        return newarr;
+      };
+      let z = arr.filter((item) => {
+        return item * 8;
+      });
+      console.log(z);
+      
+    </script>
+  </body>
+</html>

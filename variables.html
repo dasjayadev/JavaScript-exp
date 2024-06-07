@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>variables</h1>
+    <script>
+      // console.log(d);
+      // var d = 10;        //undefined
+
+      // console.log(e);
+      // let e = 39        //ReferenceError
+    
+      function main() {
+        var a = 10;
+        let b = 20;
+    }
+    main();
+    // console.log(a);       //ReferenceError
+    // console.log(b);       //ReferenceError
+
+    if(true){
+      var a = 10;
+    }
+    // var a = 30;      //var can be reincializa and redeclared also
+    console.log(a)
+
+      if(true){
+        let b = 20;
+      }
+      // console.log(b);   //reference Error
+
+      if(true){
+        let c = 30 
+        // let c = 40       //if we do show then the error is c is already declared
+        console.log(c);
+      }
+
+      if(true){
+        const d = 50
+        // d = 60              // you can not re inicialize a variable to const
+        console.log(d);
+      }
+
+
+      function main(){
+        "use strict"
+        grit = "hello i am grit"
+        // console.log(grit);     //if we use strict mode then we have error that the grit  is not defined
+      }
+
+    </script>
+  </body>
+</html>

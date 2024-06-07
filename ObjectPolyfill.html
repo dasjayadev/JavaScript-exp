@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Object Polyfill</h1>
+    <script>
+        let obj = {
+            name : "jayadev",
+            add : "odisha"
+        }
+        function main(city,home){
+            console.log(`My name is ${this.name} and i am from ${this.add}, city is`,city,home);
+        }
+
+                    //call() method
+
+        Function.prototype.mycall = function(arg={},...rest){
+            arg.fun = this
+            // console.log(this);           //this refers to the function directly
+            arg.fun(...rest)
+        }
+        main.mycall(obj)
+
+                //apply method
+
+
+        // Function.prototype.myApply = function (arg={},arr=[]){
+        //     arg.fun = this
+        //     arg.fun(...arr)
+        // }
+        // main.myApply(obj,["ctc","raj"])
+
+
+                //bind method
+
+        // let x = main.bind(obj);
+        // x()
+
+        // Function.prototype.myBind = function (arg={},...arg1){
+        //     arg.fun = this;
+        //     return function(){
+        //         arg.fun(...arg1)
+        //     }
+        // }
+        // let y= main.myBind(obj,"ctc","raj")
+        // y()
+
+
+    </script>
+</body>
+</html>

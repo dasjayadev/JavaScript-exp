@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>prototype</h1>
+    <script>
+        let obj = {
+            name: 'John',
+        }
+        console.log(obj);
+        console.log(obj.__proto__);
+
+        // console.log(obj === obj2);
+        // console.log(obj__proto__ === obj2__proto__);
+        console.log(obj.__proto__.__proto__);   //null
+    </script>
+</body>
+</html>
