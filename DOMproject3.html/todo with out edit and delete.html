@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>To-Do List</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+      body {
+        background-color: #f8f9fa;
+      }
+      .card {
+        margin-top: 20px;
+      }
+      .task-actions {
+        display: flex;
+        justify-content: space-between;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="text-center mt-5">To-Do List</h1>
+      <div class="row justify-content-center">
+        <div class="col-md-8">
+          <div class="input-group mb-3">
+            <input type="text" id="taskInput" class="form-control" placeholder="Add a new task">
+            <button class="btn btn-primary" id="addTaskButton">Add Task</button>
+          </div>
+          <div id="tasksContainer" class="list-group">
+            <!-- Tasks will be added here -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script>
+      document.getElementById('addTaskButton').addEventListener('click', addTask);
+      document.getElementById('taskInput').addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') {
+          addTask();
+        }
+      });
+
+      function addTask() {
+        const taskInput = document.getElementById('taskInput');
+        const taskText = taskInput.value.trim();
+        if (taskText === '') return;
+
+        const tasksContainer = document.getElementById('tasksContainer');
+
+        const taskItem = document.createElement('div');
+        taskItem.className = 'list-group-item list-group-item-action d-flex justify-content-between align-items-center mb-2';
+
+        const taskContent = document.createElement('span');
+        taskContent.textContent = taskText;
+
+        const taskActions = document.createElement('div');
+        taskActions.className = 'task-actions';
+
+        const editButton = document.createElement('button');
+        editButton.className = 'btn btn-sm btn-warning me-2';
+        editButton.textContent = 'Edit';
+        editButton.addEventListener('click', () => editTask(taskItem, taskContent));
+
+        taskActions.appendChild(editButton);
+
+        taskItem.appendChild(taskContent);
+        taskItem.appendChild(taskActions);
+
+        tasksContainer.appendChild(taskItem);
+
+        taskInput.value = '';
+      }
+
+      function editTask(taskItem, taskContent) {
+        const taskInput = document.getElementById('taskInput');
+        const addTaskButton = document.getElementById('addTaskButton');
+
+        taskInput.value = taskContent.textContent;
+        taskInput.focus();
+        addTaskButton.textContent = 'Update Task';
+
+        addTaskButton.removeEventListener('click', addTask);
+        addTaskButton.addEventListener('click', () => updateTask(taskItem, taskContent, addTaskButton));
+      }
+
+      function updateTask(taskItem, taskContent, addTaskButton) {
+        const taskInput = document.getElementById('taskInput');
+        const newTaskText = taskInput.value.trim();
+
+        if (newTaskText !== '') {
+          taskContent.textContent = newTaskText;
+        }
+
+        taskInput.value = '';
+        taskInput.focus();
+        addTaskButton.textContent = 'Add Task';
+
+        addTaskButton.removeEventListener('click', updateTask);
+        addTaskButton.addEventListener('click', addTask);
+      }
+    </script>
+  </body>
+</html>

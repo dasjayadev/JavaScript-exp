@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+      .form-control-lg {
+        height: calc(1.5em + 1rem + 2px); /* Ensure input height matches the large button */
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container-fluid d-flex justify-content-center mt-4">
+        <form id="inputForm" class="d-flex">
+            <input type="text" id="inputField" class="form-control form-control-lg me-2" placeholder="Write something here">
+            <button type="button" id="addButton" class="btn btn-primary btn-lg">ADD</button>
+        </form>
+    </div>
+    <div class="container text-center mt-5">
+        <div id="contentContainer" class="row"></div>
+      </div>
+
+      <!-- script -->
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script>
+      document.getElementById('addButton').addEventListener('click', addItem);
+
+      function addItem() {
+        const inputField = document.getElementById('inputField');
+        const inputValue = inputField.value.trim();
+
+        if (inputValue === '') return;
+
+        const contentContainer = document.getElementById('contentContainer');
+
+        const colDiv = document.createElement('div');
+        colDiv.className = 'col-4 bg-light d-flex justify-content-between align-items-center mb-2 p-2';
+        
+        const leftDiv = document.createElement('div');
+        leftDiv.className = 'd-flex';
+        const editButton = document.createElement('button');
+        editButton.className = 'btn btn-primary me-2';
+        editButton.textContent = 'EDIT';
+        editButton.addEventListener('click', () => editItem(colDiv, contentDiv));
+        const leftArrowButton = document.createElement('button');
+        leftArrowButton.className = 'btn btn-secondary';
+        leftArrowButton.textContent = '←';
+        leftArrowButton.addEventListener('click', () => moveLeft(colDiv));
+
+        leftDiv.appendChild(leftArrowButton);
+        leftDiv.appendChild(editButton);
+
+        const rightDiv = document.createElement('div');
+        rightDiv.className = 'd-flex';
+        const deleteButton = document.createElement('button');
+        deleteButton.className = 'btn btn-danger me-2';
+        deleteButton.textContent = 'DELETE';
+        deleteButton.addEventListener('click', () => deleteItem(colDiv));
+        const rightArrowButton = document.createElement('button');
+        rightArrowButton.className = 'btn btn-secondary';
+        rightArrowButton.textContent = '→';
+        rightArrowButton.addEventListener('click', () => moveRight(colDiv));
+
+        rightDiv.appendChild(deleteButton);
+        rightDiv.appendChild(rightArrowButton);
+
+        const contentDiv = document.createElement('div');
+        contentDiv.textContent = inputValue;
+        contentDiv.className = 'flex-grow-1 text-start';
+
+        colDiv.appendChild(leftDiv);
+        colDiv.appendChild(contentDiv);
+        colDiv.appendChild(rightDiv);
+
+        contentContainer.appendChild(colDiv);
+
+        inputField.value = '';
+      }
+
+      function editItem(colDiv, contentDiv) {
+        const newValue = prompt('Edit your item:', contentDiv.textContent);
+        if (newValue !== null) {
+          contentDiv.textContent = newValue.trim();
+        }
+      }
+
+      function deleteItem(colDiv) {
+        colDiv.remove();
+      }
+
+      function moveRight(colDiv) {
+        const contentContainer = document.getElementById('contentContainer');
+        contentContainer.appendChild(colDiv);
+      }
+
+      function moveLeft(colDiv) {
+        const contentContainer = document.getElementById('contentContainer');
+        contentContainer.insertBefore(colDiv, contentContainer.firstChild);
+      }
+    </script>
+  </body>
+</html>
