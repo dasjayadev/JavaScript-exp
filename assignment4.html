@@ -8,30 +8,32 @@
   <body>
     <h1>promise problem</h1>
     <script>
-      // let url_2 = "http://dummyjson.com/users";
-      // let url_1 = "https://dummyjson.com/products";
+      let url_2 = "http://dummyjson.com/users";
+      let url_1 = "https://dummyjson.com/products";
 
-      // let p1 = new Promise((resolve, reject) => {
-      //   try {
-      //     fetch(url_1)
-      //       .then((responce) => responce.json())
-      //       .then((data) => console.log(data))
-      //       .catch((err) => console.log(err));
-      //   } catch (error) {
-      //     reject(error);
-      //   }
-      // });
-      // let p2 = new Promise(async (resolve, reject) => {
-      //   try {
-      //     let responce = await fetch(url_2);
-      //     let data = await responce.json();
-      //     console.log(data);
-      //   } catch (error) {
-      //     reject(error);
-      //   }
-      // });
+      let p1 = new Promise((resolve, reject) => {
+        try {
+          fetch(url_1)
+            .then((responce) => responce.json())
+            .then((data) => console.log(data))
+            .catch((err) => console.log(err));
+        } catch (error) {
+          reject(error);
+        }
+      });
+      let p2 = new Promise(async (resolve, reject) => {
+        try {
+          let responce = await fetch(url_2);
+          let data = await responce.json();
+          console.log(data);
+        } catch (error) {
+          reject(error);
+        }
+      });
 
-      // Promise.all([p1, p2]);
+      Promise.all([p1, p2])
+                // .then (data => console.log(data))
+                // .catch(err => console.log(err))
 
       //q no 2
 //HOW TO SEND RESPONCE 
@@ -69,7 +71,7 @@
                 //  q no 4
 
 
-let x = [1,2,3,[4,5,[6,7,8],9]]     //flat it without using flat method
+// let x = [1,2,3,[4,5,[6,7,8],9]]     //flat it without using flat method
 // // let res = x.flat(2)
 // // console.log(res);
 
@@ -78,19 +80,19 @@ let x = [1,2,3,[4,5,[6,7,8],9]]     //flat it without using flat method
 // let z = [...y]
 // console.log(z);
 
-let result = [];
+// let result = [];
 
-function flat (x){
-  for(let item of x){
-    if(Array.isArray(item)){
-      flat(item)
-    }else{
-      result.push(item)
-    }
-  }
-  return result;
-}
-console.log(flat(x));
+// function flat (x){
+//   for(let item of x){
+//     if(Array.isArray(item)){
+//       flat(item)
+//     }else{
+//       result.push(item)
+//     }
+//   }
+//   return result;
+// }
+// console.log(flat(x));
     </script>
   </body>
 </html>
